@@ -23,6 +23,7 @@
 #endif
 #include <stdlib.h>
 #include <string.h>
+#include <windows.h>
 
 #include "property_list_service.h"
 #include "common/debug.h"
@@ -201,6 +202,11 @@ static property_list_service_error_t internal_plist_receive_timeout(property_lis
 		pktlen = be32toh(pktlen);
 		debug_info("%d bytes following", pktlen);
 		content = (char*)malloc(pktlen);
+
+		char str[20] = {0};
+	    sprintf(str, "%p", content);
+	    MessageBox (NULL, str, TEXT ("service_receive_with_timeout"), 0);
+
 		if (!content) {
 			debug_info("out of memory when allocating %d bytes", pktlen);
 			return PROPERTY_LIST_SERVICE_E_UNKNOWN_ERROR;
